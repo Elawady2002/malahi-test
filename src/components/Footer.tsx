@@ -99,7 +99,7 @@ export default function Footer() {
                  <span className="text-[#ebebeb] text-sm font-medium">emoji</span>
               </div>
               <div className="flex items-center gap-3">
-                 <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center overflow-hidden shrink-0"><img src={FazzIcon} alt="Fazz" className="w-full h-full object-cover" /></div>
+                 <div className="w-8 h-8 rounded-full bg-[#0d0d0d] flex items-center justify-center overflow-hidden shrink-0"><img src={FazzIcon} alt="Fazz" className="w-full h-full object-cover" /></div>
                  <span className="text-[#ebebeb] text-sm font-medium">Fazz</span>
               </div>
               <div className="flex items-center gap-3">

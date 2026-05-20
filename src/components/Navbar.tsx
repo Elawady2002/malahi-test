@@ -2,27 +2,29 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useLanguage } from '../context/LanguageContext';
 import Logo from "../assets/images/assest/logo.png";
 import LambyIcon from "../assets/images/assest/lamby.png";
 import DossIcon from "../assets/images/assest/doss.png";
 import NoosIcon from "../assets/images/assest/1noos.png";
 import FizziaIcon from "../assets/images/assest/fizzia.png";
 
-const dropdownLinks = [
-  { name: "About Us", path: "/about" },
-  { name: "One Entity", path: "/one-entity" },
-  { name: "Brand Identity", path: "/brand-identity" },
-  { name: "Malahi Studio", path: "/malahi-studio" },
-  { name: "International Accreditations", path: "/accreditations" },
-  { name: "Partners", path: "/partners" },
-  { name: "Branches", path: "/branches" },
-];
-
 export default function Navbar() {
+  const { language, toggleLanguage } = useLanguage();
   const location = useLocation();
   const isHome = location.pathname === '/';
   const isDetailPage = ['/lamby', '/doss', '/noos', '/fizzia'].includes(location.pathname);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const dropdownLinks = language === 'ar' ? [
+    { name: "عن ملاهي", path: "/about" },
+    { name: "الشركاء والاعتمادات", path: "/partners" },
+    { name: "الفروع", path: "/branches" },
+  ] : [
+    { name: "About Us", path: "/about" },
+    { name: "Partners & Accreditations", path: "/partners" },
+    { name: "Branches", path: "/branches" },
+  ];
 
   return (
     <nav className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[1800px] z-50 flex items-center justify-between px-6 py-6" style={{ pointerEvents: 'auto' }}>
@@ -57,15 +59,22 @@ export default function Navbar() {
         </div>
       </div>
 
-
       <div className="flex items-center gap-4 flex-1 justify-end">
+        {/* Language Switcher Button */}
+        <button
+          onClick={toggleLanguage}
+          className={`border border-white/30 ${isHome ? 'bg-transparent' : 'bg-[#0c0c0c]'} md:bg-transparent rounded-full px-4 h-[48px] flex items-center justify-center text-[#ebebeb] hover:bg-white hover:text-black transition-colors shrink-0 text-xs font-bold font-sans cursor-pointer z-50`}
+        >
+          {language === "en" ? "العربية" : "EN"}
+        </button>
+
         {isDetailPage && (
           <Link
             to="/book"
             className="bg-[#1B1B1B] text-white text-[13px] font-medium tracking-wide rounded-[24px] hover:bg-[#2a2a2a] transition-colors flex items-center justify-center shrink-0 whitespace-nowrap px-6"
             style={{ height: '48px', width: 'fit-content' }}
           >
-            BOOK A TICKET
+            {language === 'ar' ? 'احجز تذكرة' : 'BOOK A TICKET'}
           </Link>
         )}
         {isDetailPage && (
@@ -74,7 +83,7 @@ export default function Navbar() {
             className="bg-white text-[#1B1B1B] text-[13px] font-medium tracking-wide rounded-[24px] hover:bg-gray-200 transition-colors flex items-center justify-center shrink-0 whitespace-nowrap px-6"
             style={{ height: '48px', width: 'fit-content' }}
           >
-            BACK CLOSE ➔
+            {language === 'ar' ? 'رجوع وإغلاق ➔' : 'BACK CLOSE ➔'}
           </Link>
         )}
         {!isDetailPage && isHome && (
@@ -83,7 +92,7 @@ export default function Navbar() {
             className="bg-[#1B1B1B] text-white text-[13px] font-medium tracking-wide rounded-[24px] hover:bg-[#2a2a2a] transition-colors flex items-center justify-center shrink-0 whitespace-nowrap px-6"
             style={{ height: '48px', width: 'fit-content' }}
           >
-            BOOK A TICKET
+            {language === 'ar' ? 'احجز تذكرة' : 'BOOK A TICKET'}
           </Link>
         )}
         {!isDetailPage && !isHome && (
@@ -92,7 +101,7 @@ export default function Navbar() {
             className="border border-white/30 bg-[#0c0c0c] md:bg-transparent rounded-full px-[22px] h-[48px] text-xs font-medium tracking-wide text-[#ebebeb] hover:bg-white hover:text-black transition-colors flex items-center justify-center shrink-0 whitespace-nowrap"
             style={{ width: 'fit-content' }}
           >
-            Home
+            {language === 'ar' ? 'الرئيسية' : 'Home'}
           </Link>
         )}
         {!isDetailPage && (
@@ -113,7 +122,9 @@ export default function Navbar() {
                   className="absolute right-0 top-[56px] w-[280px] bg-[#111111] rounded-[24px] shadow-2xl overflow-hidden py-4 z-50 border border-white/10"
                 >
                   <div className="flex items-center justify-between px-6 pb-4 mb-2 border-b border-white/10">
-                    <span className="text-white/50 text-xs font-bold tracking-widest uppercase">Menu</span>
+                    <span className="text-white/50 text-xs font-bold tracking-widest uppercase">
+                      {language === 'ar' ? 'القائمة' : 'Menu'}
+                    </span>
                   </div>
                   <div className="flex flex-col">
                     {dropdownLinks.map((link, idx) => (
